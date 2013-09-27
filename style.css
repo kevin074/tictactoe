@@ -1,0 +1,51 @@
+#container {
+	width:600px;
+	margin:0 auto;
+}
+.box {
+	width:100px;
+	height:100px;
+	background:black;
+	border:2px solid red;
+	border-width:0px 2px 2px 0px;
+	color:blue;
+	font-size: 50px;
+}
+
+#col {
+	float:left;
+}
+
+.box:hover {
+	background:white;
+}
+
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+ }
+
+#youWin {
+	width:;
+}
+
+.right {
+	border-right:0px;
+}
+.bot{
+	border-bottom:0px;
+}
+#youWin {
+	width:225px; 
+	height:225px;
+	background:green;
+	opacity:0.5;
+	position:relative;
+	top:-265px;
+	left:40px;
+	z-index:-1;
+}
