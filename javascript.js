@@ -1,7 +1,16 @@
 $(function(){
 
-	var player1 = true;
-	var player2 = false;
+	var player1;
+	var player2;
+
+function randomStart() {
+	var random = Math.random();
+	if (random>0.5) {player2=true; player1=false;}
+	else {player1=true; player2=false;}
+}
+
+randomStart();
+
 	var clickID = "";
 	var hash = {
 		"a":1,
@@ -14,7 +23,7 @@ $(function(){
 		"h":8,
 		"i":9,
 	};
-	
+	var gameover=false;
 	// var verticalLogic =[1,-1];
 	// var horizontalLogic = [3,-3];
 	// var leftDiaLogic = [4,-4];
@@ -49,31 +58,37 @@ $(function(){
 	var winCount=0;
 	for(var i=0; i<3; i++){
 		for(var d=0;d<3;d++){
-			if(document.getElementById(array[i][d]).innerHTML==checkHTML){
-				console.log(checkHTML);
+			if(document.getElementById(array[i][d]).childNodes[0]){
+			if(document.getElementById(array[i][d]).childNodes[0].id==checkHTML){
 				winCount++;
 				if(winCount==3){
 					winner=true;
 				}
 			}
+		}
 		}
 		winCount=0;
 	}
 	for(var i=0; i<3; i++){
 		for(var d=0;d<3;d++){
-			if(document.getElementById(array[d][i]).innerHTML==checkHTML){
+			if(document.getElementById(array[d][i]).childNodes[0]){
+			if(document.getElementById(array[d][i]).childNodes[0].id==checkHTML){
+				console.log("HI");
 				winCount++;
 				if(winCount==3){
 					winner=true;
 				}
 			}
 		}
+		}
 		winCount=0;
 	}
 		var i =0;
 		while(i<3) {
-			if(document.getElementById(array[i][i]).innerHTML==checkHTML){
+			if(document.getElementById(array[i][i]).childNodes[0]) {
+			if(document.getElementById(array[i][i]).childNodes[0].id==checkHTML){
 				winCount++;
+			}
 			}
 			i++;
 		}
@@ -86,8 +101,10 @@ $(function(){
 		var i =2;
 		var k =0;
 		while(i>=0) {
-			if(document.getElementById(array[k][i]).innerHTML==checkHTML){
+			if(document.getElementById(array[k][i]).childNodes[0]) {
+			if(document.getElementById(array[k][i]).childNodes[0].id==checkHTML){
 				winCount++;
+			}
 			}
 			i--;
 			k++;
@@ -98,39 +115,41 @@ $(function(){
 		else {
 		winCount=0;
 	}
-	console.log(winner);
-	if (winner==true) {document.getElementById("youWin").style.zIndex="999";}
+	if (winner==true) {document.getElementById("youWin").style.zIndex="999"; gameover=true;}
+
 }
 
 var checkHTML = "";
 var turnCount =0;
 $(".box").click(function(){
-	if (player1==true) {
-		if ($(this).html()!="O" && $(this).html()!="X") {
-			$(this).html("X");
+	if (!gameover) {
+	if (player1) {
+		if ($(this).html()=="") {
+			$(this).html("<img src='o.jpg' width='100px' id='o'/>");
 			player1 = false;
 			player2 = true;
-			checkHTML="X";
+			checkHTML="o";
 			turnCount++;
 			document.getElementById("turnCount").innerHTML="player1";
 		};
 	}
 
-	else if (player2==true) {
-			if ($(this).html()!="O" && $(this).html()!="X") {
-				$(this).html("O");
+	else if (player2) {
+			if ($(this).html()=="") {
+				$(this).html("<img src='x.png' width='100px' id='x'/>");
 				player1 = true;
 				player2 = false;
-				checkHTML="O";
+				checkHTML="x";
 				turnCount++;
 				document.getElementById("turnCount").innerHTML="player2";
 			};
 	};
 
 	// clickID = $(this).attr("id");
+					console.log("after player1= "+player1);
+				}
 	 win();
-	 // document.getElementById("turnCount").innerHTML()
-	 console.log(turnCount);
+	 // document.getElementById("turnCount").innerHTML();
  });
 
 	// function win() {
@@ -219,10 +238,11 @@ $(".box").click(function(){
 
 
 $("#restart").click(function(){
-	$(".box").html(" ");
-	player1 = true;
-	player2 = false;
-	winner=false
+	$(".box").html("");
+	winner=false;
+	gameover=false;
+	document.getElementById("youWin").style.zIndex="-1"
+	randomStart();
 });
 
 });
