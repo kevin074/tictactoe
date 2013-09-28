@@ -2,6 +2,9 @@ $(function(){
 
 	var player1;
 	var player2;
+	var gameover=false;
+	var clickID = "";
+
 
 function randomStart() {
 	var random = Math.random();
@@ -11,19 +14,17 @@ function randomStart() {
 
 randomStart();
 
-	var clickID = "";
-	var hash = {
-		"a":1,
-		"b":2,
-		"c":3,
-		"d":4,
-		"e":5,
-		"f":6,
-		"g":7,
-		"h":8,
-		"i":9,
-	};
-	var gameover=false;
+	// var hash = {
+	// 	"a":1,
+	// 	"b":2,
+	// 	"c":3,
+	// 	"d":4,
+	// 	"e":5,
+	// 	"f":6,
+	// 	"g":7,
+	// 	"h":8,
+	// 	"i":9,
+	// };
 	// var verticalLogic =[1,-1];
 	// var horizontalLogic = [3,-3];
 	// var leftDiaLogic = [4,-4];
@@ -39,6 +40,8 @@ randomStart();
 	// var RightToLeftCornersLogic = [1,-1,2,-2,3,-3]; 	//3=7
 	// var othersLogic = [1,-1,3,-3]; 						//2=4=6=8
 
+	
+
 	var checkingID = ["a","b","c","d","e","f","g","h","i"];
 	var array = [[],[],[]];
 	var count = 0;
@@ -52,6 +55,8 @@ randomStart();
 			}
 		}
 	}
+
+
 
 	function win() {
 	var winner = false;
@@ -129,7 +134,6 @@ $(".box").click(function(){
 			player1 = false;
 			player2 = true;
 			checkHTML="o";
-			turnCount++;
 			document.getElementById("turnCount").innerHTML="player1";
 		};
 	}
@@ -140,16 +144,13 @@ $(".box").click(function(){
 				player1 = true;
 				player2 = false;
 				checkHTML="x";
-				turnCount++;
 				document.getElementById("turnCount").innerHTML="player2";
 			};
 	};
 
-	// clickID = $(this).attr("id");
 					console.log("after player1= "+player1);
 				}
 	 win();
-	 // document.getElementById("turnCount").innerHTML();
  });
 
 	// function win() {
