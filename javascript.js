@@ -4,6 +4,7 @@ $(function(){
 	var player2;
 	var gameover=false;
 	var clickID = "";
+	var winner = false;
 
 
 function randomStart() {
@@ -47,24 +48,18 @@ randomStart();
 	var count = 0;
 	for(var i=0; i<3; i++){
 		for(var d=0;d<3;d++){
-			if(i>0) {
 				array[i][d] = checkingID[i+d+i*2];
-			}
-			else {
-				 array[i][d] = checkingID[i+d];
-			}
 		}
 	}
 
 
 
 	function win() {
-	var winner = false;
-	var winCount=0;
+		var winCount=0;
 	for(var i=0; i<3; i++){
 		for(var d=0;d<3;d++){
-			if(document.getElementById(array[i][d]).childNodes[0]){
-			if(document.getElementById(array[i][d]).childNodes[0].id==checkHTML){
+			if(document.getElementById(array[i][d]).innerHTML){
+			if(document.getElementById(array[i][d]).innerHTML==checkHTML){
 				winCount++;
 				if(winCount==3){
 					winner=true;
@@ -76,9 +71,8 @@ randomStart();
 	}
 	for(var i=0; i<3; i++){
 		for(var d=0;d<3;d++){
-			if(document.getElementById(array[d][i]).childNodes[0]){
-			if(document.getElementById(array[d][i]).childNodes[0].id==checkHTML){
-				console.log("HI");
+			if(document.getElementById(array[d][i]).innerHTML){
+			if(document.getElementById(array[d][i]).innerHTML==checkHTML){
 				winCount++;
 				if(winCount==3){
 					winner=true;
@@ -90,8 +84,8 @@ randomStart();
 	}
 		var i =0;
 		while(i<3) {
-			if(document.getElementById(array[i][i]).childNodes[0]) {
-			if(document.getElementById(array[i][i]).childNodes[0].id==checkHTML){
+			if(document.getElementById(array[i][i]).innerHTML) {
+			if(document.getElementById(array[i][i]).innerHTML==checkHTML){
 				winCount++;
 			}
 			}
@@ -106,8 +100,8 @@ randomStart();
 		var i =2;
 		var k =0;
 		while(i>=0) {
-			if(document.getElementById(array[k][i]).childNodes[0]) {
-			if(document.getElementById(array[k][i]).childNodes[0].id==checkHTML){
+			if(document.getElementById(array[k][i]).innerHTML) {
+			if(document.getElementById(array[k][i]).innerHTML==checkHTML){
 				winCount++;
 			}
 			}
@@ -130,28 +124,44 @@ $(".box").click(function(){
 	if (!gameover) {
 	if (player1) {
 		if ($(this).html()=="") {
-			$(this).html("<img src='o.jpg' width='100px' id='o'/>");
+			$(this).html("X");
 			player1 = false;
 			player2 = true;
-			checkHTML="o";
-			document.getElementById("turnCount").innerHTML="player1";
+			checkHTML="X";
+			document.getElementById("playerCount").innerHTML="player1";
+			turnCount++;
 		};
 	}
 
 	else if (player2) {
 			if ($(this).html()=="") {
-				$(this).html("<img src='x.png' width='100px' id='x'/>");
+				$(this).html("O");
 				player1 = true;
 				player2 = false;
-				checkHTML="x";
-				document.getElementById("turnCount").innerHTML="player2";
+				checkHTML="O";
+				document.getElementById("playerCount").innerHTML="player2";
+				turnCount++;
 			};
 	};
 
-					console.log("after player1= "+player1);
 				}
 	 win();
+	 tie();
+	 turnCircle(turnCount);
  });
+
+	function tie () {
+		if (turnCount==9 && winner==false) {
+			for(var i=0; i<document.getElementsByClassName("box").length; i++)
+				document.getElementsByClassName("box")[i].innerHTML="";
+			winner=false;
+			gameover=false;
+			randomStart();
+			turnCount=0;
+			circleRestart();	
+		};
+	};
+
 
 	// function win() {
 	// 	// var clickKey = hash[clickID]; 
@@ -211,7 +221,7 @@ $(".box").click(function(){
 // 	};
 
 
-// 	function checkID(checkKey,increment,checkHTML) {
+// 	refunction checkID(checkKey,increment,checkHTML) {
 // 		var checkID='';
 // 		if(checkingID[checkKey]){
 // 			checkID=checkingID[checkKey];
@@ -236,14 +246,99 @@ $(".box").click(function(){
 // 			};
 
 
-
+var restart=false;
 
 $("#restart").click(function(){
 	$(".box").html("");
 	winner=false;
 	gameover=false;
-	document.getElementById("youWin").style.zIndex="-1"
+	document.getElementById("youWin").style.zIndex="-1";
 	randomStart();
+	turnCount=0;
+	circleRestart();
 });
 
+function circleRestart () {
+	for (var i=0; i<circleArray.length; i++){
+		document.getElementById(circleArray[i]).style.background=saveColor[circleArray[i]];
+		document.getElementById(circleArray[i]).style.border="none";
+		document.getElementById(circleArray[i]).style.color="blue";
+	}
+}
+
+var yPosition = 450*Math.sin(Math.PI/4);
+var xPosition = 450*Math.cos(Math.PI/4);
+
+var circleArray =[
+	"circle1",
+	"circle2",
+	"circle3",
+	"circle4",
+	"circle5",
+	"circle6",
+	"circle7",
+	"circle8"
+];
+var tempArray=[];
+	
+	for(var i=0; i<document.getElementsByClassName("circle").length; i++){
+		tempArray+=i;
+	}
+
+	for(var i=0; i<tempArray.length;i++){
+		document.getElementById(circleArray[i]).style.top=300-300*Math.sin(Math.PI*1/4*i);
+		document.getElementById(circleArray[i]).style.left=300-300*Math.cos(Math.PI*1/4*i);
+	}
+
+// document.getElementById("circle1").style.top=450-yPosition;
+
+	var circleHash = {
+		0:"circle3",
+		1:"circle2",
+		2:"circle1",
+		3:"circle8",
+		4:"circle7",
+		5:"circle6",
+		6:"circle5",
+		7:"circle4"
+	};
+	
+	var saveColor= { 
+	"circle3":"rgba(255,129,129,1)",
+	"circle2":"rgba(214,129,255,1)",
+	"circle1":"rgba(129,134,255,1)",
+	"circle8":"rgba(129,210,255,1)",
+	"circle7":"rgba(129,255,248,1)",
+	"circle6":"rgba(129,255,146,1)",
+	"circle5":"rgba(222,255,129,1)",
+	"circle4":"rgba(255,172,129,1)"
+	}
+
+function turnCircle (turnCount,restart) {
+
+	var tempColor;
+	var circleTemp = circleHash[turnCount-1];
+	tempColor = saveColor[circleHash[turnCount-2]];
+	if (turnCount-1>0) {
+		document.getElementById(circleHash[turnCount-2]).style.background=tempColor;
+		document.getElementById(circleHash[turnCount-2]).style.border="none";
+		document.getElementById(circleHash[turnCount-2]).style.color="blue";
+		document.getElementById(circleHash[turnCount-2]).style.fontSize="15px"
+		document.getElementById(circleHash[turnCount-2]).style.lineHeight="70px"
+	}
+	document.getElementById(circleTemp).style.background="rgba(255,97,97,1)";
+	document.getElementById(circleTemp).style.border="5px solid rgba(75,75,75,1)"
+	document.getElementById(circleTemp).style.color="white"
+	document.getElementById(circleTemp).style.lineHeight="60px"
+
+}
+// circle3=really1
+// circle2=really2
+// circle1=really3
+// circle8=really4
+// circle7=really5
+// circle6=really6
+// circle5=really7
+// circle4=really8
 });
+

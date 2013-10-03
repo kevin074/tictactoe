@@ -1,23 +1,43 @@
+body{
+	font-size: 15px;
+	font-family: Helvetica, Arial, Sans-serif;
+}
+#X{
+	font-size:50px;
+}
 #container {
-	width:600px;
+	width:304px;
 	margin:0 auto;
+	background:white;
+	position:relative;
 }
 .box {
 	width:100px;
 	height:100px;
-	background:black;
-	border:2px solid red;
+	background:rgb(130,130,130);
+	border:2px solid white;
 	border-width:0px 2px 2px 0px;
-	color:blue;
+	color:white;
 	font-size: 50px;
+	text-align: center;
+	line-height: 100px
 }
-
+#box_container{
+	width:304px;
+/*	background: blue;
+*/	margin:0 auto;
+	margin-top:200px;	
+}
+#others{
+	margin: 0 auto;
+	width:304px;
+}
 #col {
 	float:left;
 }
 
 .box:hover {
-	background:white;
+	background:rgba(0,0,0,0.7);
 }
 
 .clearfix:after {
@@ -28,10 +48,6 @@
      clear: both;
      height: 0;
  }
-
-#youWin {
-	width:;
-}
 
 .right {
 	border-right:0px;
@@ -47,5 +63,64 @@
 	position:relative;
 	top:40px;
 	left:40px;
+	z-index:-1;	
+}
+
+#circle_container {
+	width: 600px;
+	height: 600px;
+/*	background:rgba(0,255,255,0.4);
+*/	top:-190px;
+	left:-180px;	
+	margin: 0 auto;
+	position:absolute;
 	z-index:-1;
 }
+
+.circle {
+	Box-sizing: Border-box;
+	width:70px;
+	height:70px;
+	background:purple;
+	border-radius: 100%;
+	position:absolute;
+	color:blue;
+	text-align:center;
+	line-height:70px; 
+	font-weight: bold;
+}
+ 
+#circle3{
+	background:rgba(255,129,129,1);
+}
+#circle2{
+	background:rgba(214,129,255,1);
+}
+#circle1{
+	background:rgba(129,134,255,1);
+}
+#circle8{
+	background:rgba(129,210,255,1);
+}
+#circle7{
+	background:rgba(129,255,248,1);
+}
+#circle6{
+	background:rgba(129,255,146,1);
+}
+#circle5{
+	background:rgba(222,255,129,1);
+}
+#circle4{
+	background:rgba(255,172,1291);
+}
+
+/*circle3=really1
+circle2=really2
+circle1=really3
+circle8=really4
+circle7=really5
+circle6=really6
+circle5=really7
+circle4=really8
+*/
